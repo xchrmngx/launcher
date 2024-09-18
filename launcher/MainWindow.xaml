@@ -1,0 +1,122 @@
+﻿<Window x:Class="launcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:launcher"
+        mc:Ignorable="d"
+        Title="launcher" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Стиль для TabItem -->
+        <Style TargetType="TabItem">
+            <Setter Property="Background" Value="#FF260056" />
+            <!-- Цвет фона вкладок -->
+            <Setter Property="Foreground" Value="White" />
+            <!-- Цвет текста вкладок -->
+            <Setter Property="FontFamily" Value="Bahnschrift SemiBold" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Name="Border" Background="{TemplateBinding Background}" BorderBrush="Transparent" Padding="10,5">
+                            <ContentPresenter x:Name="ContentSite" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Триггер для активного TabItem -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#FF260056" />
+                                <!-- Цвет активной вкладки -->
+                                <Setter Property="Foreground" Value="White" />
+                                <!-- Цвет текста активной вкладки -->
+                            </Trigger>
+                            <!-- Триггер для неактивного TabItem -->
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#FF260056" />
+                                <!-- Цвет неактивной вкладки -->
+                                <Setter Property="Foreground" Value="White" />
+                                <!-- Цвет текста неактивной вкладки -->
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#FF3A75C4" />
+                                <!-- Цвет при наведении мыши -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#FF260056" />
+            <!-- Цвет фона заголовков -->
+            <Setter Property="Foreground" Value="White" />
+            <!-- Цвет текста заголовков -->
+            <Setter Property="BorderBrush" Value="#FF260056"/>
+            <Setter Property="FontFamily" Value="Bahnschrift SemiBold" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="Background" Value="#FF4B237D" />
+            <!-- Цвет фона ячеек -->
+            <Setter Property="Foreground" Value="#FF4B237D" />
+            <!-- Цвет текста ячеек -->
+            <Setter Property="BorderBrush" Value="#FF260056"/>
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FF260056">
+        <TabControl Background="#FF260056" BorderBrush="#FF260056"  Foreground="#FF260056">
+            <TabItem Header="Лаунчер" Background="#FF260056" FontFamily="Bahnschrift SemiBold" BorderBrush="#FF260056">
+                <Grid Background="#FF260056">
+                    <Button x:Name="button" Click="button_Click" Content="добавить" HorizontalAlignment="Left" Margin="614,149,0,0" VerticalAlignment="Top" Height="54" Width="99" Background="#FF170035" Foreground="White" BorderBrush="{x:Null}"/>
+                    <DataGrid Name="FilesDataGrid" AutoGenerateColumns="False" Margin="0,0,300,0" Background="#FF260056"  BorderBrush="#FF260056">
+                        <DataGrid.Columns>
+                            <!-- Колонка для иконки -->
+                            <DataGridTemplateColumn Header="Иконка" Width="100" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding FileIcon}" Width="30" Height="30" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- Колонка для названия файла -->
+                            <DataGridTextColumn Header="Название" Binding="{Binding FileNameWithoutExtension}" Width="*" Foreground="White" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="button2" Click="button2_Click" Content="запустить" HorizontalAlignment="Left" Margin="614,208,0,0" VerticalAlignment="Top" Height="54" Width="99" Background="#FF170035" Foreground="White" BorderBrush="{x:Null}"/>
+                    <Button x:Name="button3" Click="button3_Click" Content="Удалить" HorizontalAlignment="Left" Margin="614,267,0,0" VerticalAlignment="Top" Height="54" Width="97" Background="#FF170035" Foreground="White" BorderBrush="{x:Null}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="FAQ" Background="#FF260056" Foreground="White" FontFamily="Bahnschrift SemiBold">
+                <Grid Background="#FF260056">
+                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="1. Что за программа?" VerticalAlignment="Top" Foreground="White" FontFamily="Bahnschrift SemiBold" FontSize="16" />
+                    <TextBlock HorizontalAlignment="Left" Margin="10,30,0,0" TextWrapping="Wrap" Text=" - Это программа, которая позволяет добавлять любое приложение и запускать его - универсальный лаунчер." VerticalAlignment="Top" Foreground="White" FontFamily="Bahnschrift SemiBold" FontSize="16"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70, 0, 0" TextWrapping="Wrap" Text="2. Куда сохраняются файлы?" Foreground="White" FontFamily="Bahnschrift SemiBold" FontSize="16"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,0,0" TextWrapping="Wrap" Text=" - На диск С, В папку Документы - savedApps.json" Foreground="White" FontFamily="Bahnschrift SemiBold" FontSize="16"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,110,0,0" TextWrapping="Wrap" Text="3. Какие файлы можно загрузить?" Foreground="White" FontFamily="Bahnschrift SemiBold" FontSize="16"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,0,0" TextWrapping="Wrap" Text=" - Любые." Foreground="White" FontFamily="Bahnschrift SemiBold" FontSize="16"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Функционал" Background="#FF260056" Foreground="White" FontFamily="Bahnschrift SemiBold">
+                <Grid Background="#FF260056">
+                    <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="10,10,0,0" TextWrapping="Wrap" Text="При нажатии на кнопку добавить, открывается диалоговое окно для выбора файла." Foreground="White" FontFamily="Bahnschrift SemiBold"/>
+                    <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="10,35,0,0" TextWrapping="Wrap" Text="Чтобы запустить файл, нужно выбрать его из списка добавленных и нажать на кнопку Запустить" VerticalAlignment="Top" Foreground="White" FontFamily="Bahnschrift SemiBold"/>
+                    <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="10,60,0,0" VerticalAlignment="Top" TextWrapping="Wrap" Text="Чтобы удалить файл, нужно выбрать его из списка и нажать на кнопку Удалить." Foreground="White" FontFamily="Bahnschrift SemiBold"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Rectangle  HorizontalAlignment="Left" Height="142" Margin="589,0,0,0"  VerticalAlignment="Top" Width="218">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/images/Aesthetic-Star-PNG-Transparent копия.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle  HorizontalAlignment="Left" Height="142" Margin="-105,341,0,0" VerticalAlignment="Top" Width="218">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/images/Aesthetic-Star-PNG-Transparent копия.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle  HorizontalAlignment="Left" Height="142" Margin="698,364,0,0" VerticalAlignment="Top" Width="218">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/images/Aesthetic-Star-PNG-Transparent копия.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Grid>
+</Window>
